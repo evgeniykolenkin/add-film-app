@@ -8,7 +8,9 @@ const BTN_DELETE_CLASS_NAME = "btn__delete-film";
 const inputNode = document.getElementById("add__app-input");
 const addBtnNode = document.getElementById("btn__add-film");
 const listNode = document.getElementById("add__app-list");
+const btnCheck = document.querySelector(".btn__check-film");
 
+// наша главная функция создания элемента списка
 function createDeleteFilms() {
   // значения в инпуте будут равны названию фильма
   const titleFilm = inputNode.value;
@@ -18,8 +20,9 @@ function createDeleteFilms() {
   li.className = LIST_EL_CLASS_NAME;
   li.innerHTML = "";
 
-  // добавили в список ul элемент li
+  // добавляем в список ul элемент li
   listNode.appendChild(li);
+  saveData();
 
   // создаем кнопки
   const btnCheck = document.createElement("button");
@@ -33,21 +36,22 @@ function createDeleteFilms() {
   btnDelete.innerHTML = `
   <img src="resources/btn-cross.png" alt="cross" />`;
 
-  // вешаем обработчики событий на них
+  // добавили в элемент li кнопки
+  li.appendChild(btnCheck);
+  li.appendChild(btnDelete);
 
+  // вешаем обработчики событий на них
   // переключаем класс checked
   btnCheck.addEventListener("click", () => {
     li.classList.toggle(CHECKED_CLASS_NAME);
+    saveData();
   });
 
   // удаляем один из элементов li
   btnDelete.addEventListener("click", () => {
     listNode.removeChild(li);
+    saveData();
   });
-
-  // добавили в элемент li кнопки
-  li.appendChild(btnCheck);
-  li.appendChild(btnDelete);
 }
 
 // добавляем значение в инпуте inputNode через клик по кнопке addBtnNode
@@ -59,6 +63,7 @@ addBtnNode.addEventListener("click", () => {
   }
   createDeleteFilms(inputNode.value);
   inputNode.value = "";
+  saveData();
 });
 
 inputNode.addEventListener("keyup", function (e) {
@@ -66,3 +71,16 @@ inputNode.addEventListener("keyup", function (e) {
     addBtnNode.click();
   }
 });
+
+// сохранение в localStorage
+// не понимаю, почему я не могу изменять данные из localStorage
+
+// function saveData() {
+//   localStorage.setItem("data", listNode.innerHTML);
+// }
+
+// function getData() {
+//   listNode.innerHTML = localStorage.getItem("data");
+// }
+
+// getData();
