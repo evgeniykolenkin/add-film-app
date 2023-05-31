@@ -22,7 +22,7 @@ function createDeleteFilms() {
 
   // добавляем в список ul элемент li
   listNode.appendChild(li);
-  saveData();
+  // saveData();
 
   // создаем кнопки
   const btnCheck = document.createElement("button");
@@ -44,13 +44,13 @@ function createDeleteFilms() {
   // переключаем класс checked
   btnCheck.addEventListener("click", () => {
     li.classList.toggle(CHECKED_CLASS_NAME);
-    saveData();
+    // saveData();
   });
 
   // удаляем один из элементов li
   btnDelete.addEventListener("click", () => {
     listNode.removeChild(li);
-    saveData();
+    // saveData();
   });
 }
 
@@ -63,7 +63,7 @@ addBtnNode.addEventListener("click", () => {
   }
   createDeleteFilms(inputNode.value);
   inputNode.value = "";
-  saveData();
+  // saveData();
 });
 
 inputNode.addEventListener("keyup", function (e) {
