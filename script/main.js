@@ -51,6 +51,7 @@ function createDeleteFilms() {
 }
 
 // добавляем значение в инпуте inputNode через клик по кнопке addBtnNode
+// привязываем тоже самое на keyup
 addBtnNode.addEventListener("click", () => {
   if (!inputNode.value) {
     alert("Введите название фильма");
@@ -58,4 +59,10 @@ addBtnNode.addEventListener("click", () => {
   }
   createDeleteFilms(inputNode.value);
   inputNode.value = "";
+});
+
+inputNode.addEventListener("keyup", function (e) {
+  if (e.code === "Enter") {
+    addBtnNode.click();
+  }
 });
