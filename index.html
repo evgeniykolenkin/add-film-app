@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="shortcut icon"
+      href="resources/favicon.ico"
+      type="image/x-icon"
+    />
+    <title>Add Film App</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Arimo&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <main class="container">
+      <div class="add__app">
+        <div class="add__app-filter">
+          <div class="filter__title"><p>Cписок фильмов</p></div>
+          <div class="filter__title"><p>2023</p></div>
+        </div>
+        <h1>Посмотреть</h1>
+        <div class="add__app-inner">
+          <div class="add__app-input">
+            <input
+              class="app__input-data"
+              type="text"
+              placeholder="Добавить фильм"
+            />
+            <button class="btn__add-film btn">
+              <img src="resources/btn-arrow.png" alt="arrow" />
+            </button>
+          </div>
+          <div class="add__app-list">
+            <div class="add__app-film">
+              <div class="check__area">
+                <button class="btn__checked-film">
+                  <img src="resources/unchecked.png" alt="circle" />
+                </button>
+                <h2>Остров проклятых</h2>
+              </div>
+              <button class="btn__delete-film btn">
+                <img src="resources/btn-cross.png" alt="cross" />
+              </button>
+            </div>
+            <div class="add__app-film">
+              <div class="check__area">
+                <button class="btn__checked-film">
+                  <img
+                    class="checked"
+                    src="resources/unchecked.png"
+                    alt="circle"
+                  />
+                </button>
+                <h2>Титаник</h2>
+              </div>
+              <button class="btn__delete-film btn">
+                <img src="resources/btn-cross.png" alt="cross" />
+              </button>
+            </div>
+            <div class="add__app-film">
+              <div class="check__area">
+                <button class="btn__checked-film">
+                  <img src="resources/unchecked.png" alt="circle" />
+                </button>
+                <h2>Волк с Уолл-Стрит</h2>
+              </div>
+              <button class="btn__delete-film btn">
+                <img src="resources/btn-cross.png" alt="cross" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- script -->
+    <script src="script/main.js"></script>
+  </body>
+</html>
