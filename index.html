@@ -30,53 +30,16 @@
         <div class="add__app-inner">
           <div class="add__app-input">
             <input
+              id="add__app-input"
               class="app__input-data"
               type="text"
               placeholder="Добавить фильм"
             />
-            <button class="btn__add-film btn">
+            <button id="btn__add-film" class="btn__add-film btn">
               <img src="resources/btn-arrow.png" alt="arrow" />
             </button>
           </div>
-          <div class="add__app-list">
-            <div class="add__app-film">
-              <div class="check__area">
-                <button class="btn__checked-film">
-                  <img src="resources/unchecked.png" alt="circle" />
-                </button>
-                <h2>Остров проклятых</h2>
-              </div>
-              <button class="btn__delete-film btn">
-                <img src="resources/btn-cross.png" alt="cross" />
-              </button>
-            </div>
-            <div class="add__app-film">
-              <div class="check__area">
-                <button class="btn__checked-film">
-                  <img
-                    class="checked"
-                    src="resources/unchecked.png"
-                    alt="circle"
-                  />
-                </button>
-                <h2>Титаник</h2>
-              </div>
-              <button class="btn__delete-film btn">
-                <img src="resources/btn-cross.png" alt="cross" />
-              </button>
-            </div>
-            <div class="add__app-film">
-              <div class="check__area">
-                <button class="btn__checked-film">
-                  <img src="resources/unchecked.png" alt="circle" />
-                </button>
-                <h2>Волк с Уолл-Стрит</h2>
-              </div>
-              <button class="btn__delete-film btn">
-                <img src="resources/btn-cross.png" alt="cross" />
-              </button>
-            </div>
-          </div>
+          <ul id="add__app-list" class="add__app-list"></ul>
         </div>
       </div>
     </main>
