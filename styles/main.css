@@ -4,6 +4,7 @@ html {
 
 body {
   font-family: "Arimo", sans-serif;
+  background-color: #181818;
 }
 
 button,
@@ -13,6 +14,10 @@ input {
 
 button {
   cursor: pointer;
+}
+
+button img {
+  pointer-events: none;
 }
 
 input {
@@ -29,33 +34,41 @@ input::placeholder {
   opacity: 0.5;
 }
 
+header {
+  margin-bottom: -2px;
+}
+
 .container {
   width: 100%;
-  min-height: 100vh;
   padding: 10px;
   box-sizing: border-box;
-  background-color: #181818;
 }
 
 .add__app {
-  width: 930px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+  max-width: 900px;
+  width: 100%;
   margin: 0 auto;
   padding: 30px;
 }
 
-.add__app-filter {
+main .add__app {
+  height: 600px;
+  overflow-y: auto;
+}
+
+.filters {
   display: flex;
 }
 
-.add__app-filter p {
+.filters__title {
   font-size: 15px;
   line-height: 17px;
   letter-spacing: -0.04em;
   text-transform: uppercase;
   color: #f3f6f9;
-}
-
-.filter__title {
   padding: 10px 24px;
   background-color: #6532f8;
   border-radius: 200px;
@@ -63,67 +76,48 @@ input::placeholder {
 
 h1 {
   font-size: 120px;
-  line-height: 90px;
+  line-height: 50px;
   letter-spacing: -0.04em;
   color: #f3f6f9;
   margin-top: 20px;
-  margin-bottom: 45px;
+  margin-bottom: 20px;
 }
 
-h2 {
-  font-size: 20px;
-  line-height: 23px;
-  letter-spacing: -0.02em;
-  color: #f3f6f9;
-}
-
-.add__app-inner {
-  display: flex;
-  flex-direction: column;
-  row-gap: 40px;
-  width: 100%;
-  height: 530px;
-  padding: 86px 79px;
-  border-radius: 10px;
-  background-color: #232323;
-  overflow-y: auto;
-}
-
-.add__app-inner::-webkit-scrollbar {
+.add__app::-webkit-scrollbar {
   width: 10px;
 }
 
-.add__app-inner::-webkit-scrollbar-track {
+.add__app::-webkit-scrollbar-track {
   background-color: #3a3939;
   border-radius: 20px;
 }
 
-.add__app-inner::-webkit-scrollbar-thumb {
+.add__app::-webkit-scrollbar-thumb {
   background-color: #6532f8;
   border-radius: 20px;
 }
 
-.add__app-input {
+.add__app-form {
   display: flex;
   gap: 20px;
 }
 
-.app__input-data {
-  padding: 15px 5px;
+.add__app-input {
+  width: 411px;
   box-sizing: border-box;
   font-size: 30px;
   line-height: 34px;
   letter-spacing: -0.02em;
+  padding: 15px 5px;
   color: #f3f6f9;
-  width: 411px;
   border-bottom: 2px solid #3a3939;
 }
 
 .btn__add-film {
   display: flex;
-  padding: 16px;
   width: 62px;
   height: 62px;
+  padding: 16px;
   background-color: #6532f8;
   border-radius: 50%;
   border: none;
@@ -133,36 +127,111 @@ h2 {
   width: 100%;
 }
 
+.col__left {
+  width: 100%;
+}
+
+.film__title {
+  width: 100%;
+  font-size: 20px;
+  line-height: 23px;
+  letter-spacing: -0.02em;
+  color: #f3f6f9;
+}
+
+.film__title:not(:read-only) {
+  color: #6532f8;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+}
+
+.btn img {
+  width: 100%;
+}
+
+.btn__edit-film {
+  width: 60px;
+  height: 60px;
+}
+
+.btn__delete-film {
+  width: 50px;
+  height: 50px;
+}
+
+.btn__edit-film:hover {
+  background-color: green;
+  border-radius: 50%;
+}
+
+.btn__delete-film:hover {
+  background-color: purple;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.btn__save-edit {
+  width: 65px;
+  height: 65px;
+}
+
+.hidden {
+  display: none;
+}
+
 .add__app-list {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   row-gap: 3px;
+}
+
+.empty__item-list {
+  width: 500px;
+}
+
+.empty__item-list img {
+  width: 100%;
 }
 
 .add__app-film {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 29px 20px;
   background-color: #3a3939;
   border-radius: 10px;
 }
 
-.btn__check-film {
+.add__app-film .col__left,
+.add__app-film .col__right {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 20px;
-  width: 100%;
-  padding: 0px;
-  background-color: transparent;
-  border: none;
+}
+
+.btn__check-film {
+  width: 39px;
+  height: 39px;
 }
 
 .btn__check-film img {
-  width: 19px;
-  height: 19px;
+  background-color: yellow;
   border: none;
   border-radius: 50%;
   object-fit: none;
+}
+
+.btn__check-film:hover img {
+  background-color: chartreuse;
 }
 
 .checked {
@@ -173,161 +242,142 @@ h2 {
 }
 
 .checked .btn__check-film img {
-  background-color: #6532f8;
+  background-color: tomato;
 }
 
-.btn__delete-film {
-  display: flex;
-  width: 23px;
-  height: 23px;
-  padding: 0;
-  background-color: transparent;
-  border: none;
-}
-
-.btn__delete-film img {
-  width: 100%;
-}
-
-@media (max-width: 1199px) {
-  .container {
-    min-height: 100vh;
+@media (max-width: 767px) {
+  .add__app {
+    row-gap: 10px;
     padding: 10px;
   }
 
-  .add__app {
-    width: 100%;
-    padding: 15px;
-  }
-
-  .add__app-filter p {
-    font-size: 12px;
-    line-height: 10px;
-  }
-
-  .filter__title {
-    padding: 5px 12px;
+  .filters__title {
+    font-size: 15px;
+    line-height: 17px;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: #f3f6f9;
+    padding: 10px 24px;
+    background-color: #6532f8;
+    border-radius: 200px;
   }
 
   h1 {
+    font-size: 70px;
+    line-height: 50px;
+    letter-spacing: -0.04em;
+    color: #f3f6f9;
+    margin: 0;
+  }
+
+  .add__app::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .add__app::-webkit-scrollbar-track {
+    background-color: #3a3939;
+    border-radius: 20px;
+  }
+
+  .add__app::-webkit-scrollbar-thumb {
+    background-color: #6532f8;
+    border-radius: 20px;
+  }
+
+  .add__app-form {
     width: 100%;
-    font-size: 80px;
-    line-height: 70px;
-    margin-top: 15px;
-    margin-bottom: 30px;
-  }
-
-  h2 {
-    font-size: 20px;
-    line-height: 20px;
-  }
-
-  .add__app-inner {
-    row-gap: 30px;
-    width: 100%;
-    height: 400px;
-    padding: 56px 49px;
-    border-radius: 10px;
-  }
-
-  .add__app-inner::-webkit-scrollbar {
-    width: 5px;
+    justify-content: space-between;
+    gap: 20px;
   }
 
   .add__app-input {
-    justify-content: space-between;
+    width: 100%;
+    font-size: 30px;
+    line-height: 34px;
+    padding: 0 10px;
   }
 
-  .app__input-data {
-    padding: 10px 5px;
-    font-size: 25px;
-    line-height: 28px;
+  .btn__edit-film {
+    width: 30px;
+    height: 30px;
   }
 
-  .btn__add-film {
-    width: 55px;
-    height: 55px;
+  .empty__item-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+  }
+
+  .empty__item-list img {
+    width: 100%;
   }
 
   .add__app-film {
-    padding: 25px 10px;
+    padding: 20px 20px;
+  }
+
+  .add__app-film .col__left,
+  .add__app-film .col__right {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 767px) {
+  .add__app {
+    row-gap: 5px;
+    padding: 0;
+  }
+
+  main .add__app {
+    height: 240px;
+    padding: 5px;
+  }
+
+  .filters__title {
+    font-size: 15px;
+    line-height: 5px;
+    padding: 10px 10px;
+  }
+
+  h1 {
+    font-size: 42px;
+  }
+
+  .add__app::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .add__app-form {
+    gap: 10px;
+  }
+
+  .add__app-input {
+    font-size: 25px;
+    padding: 0 5px;
+  }
+
+  .btn__add-film {
+    width: 52px;
+    height: 52px;
+  }
+
+  .btn__edit-film {
+    width: 30px;
+    height: 30px;
   }
 
   .btn__delete-film {
     width: 20px;
     height: 20px;
   }
-}
-
-@media (max-width: 767px) {
-  .container {
-    min-height: 100vh;
-    padding: 10px;
-  }
-
-  .add__app {
-    width: 100%;
-    padding: 15px;
-  }
-
-  .add__app-filter p {
-    font-size: 12px;
-    line-height: 10px;
-  }
-
-  .filter__title {
-    padding: 5px 12px;
-  }
-
-  h1 {
-    width: 100%;
-    font-size: 60px;
-    line-height: 70px;
-    margin-top: 15px;
-    margin-bottom: 30px;
-  }
-
-  h2 {
-    font-size: 15px;
-    line-height: 20px;
-  }
-
-  .add__app-inner {
-    row-gap: 30px;
-    width: 100%;
-    height: 200px;
-    padding: 5px;
-    border-radius: 10px;
-  }
-
-  .add__app-inner::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  .add__app-input {
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .app__input-data {
-    width: 100%;
-    padding: 5px;
-    font-size: 20px;
-    line-height: 20px;
-  }
-
-  .btn__add-film {
-    width: 30px;
-    height: 30px;
-    padding: 5px;
-  }
 
   .add__app-film {
-    padding: 15px 8px;
+    padding: 10px 10px;
   }
 
-  .btn__delete-film {
-    width: 15px;
-    height: 15px;
+  .add__app-film .col__left,
+  .add__app-film .col__right {
+    gap: 10px;
   }
 }

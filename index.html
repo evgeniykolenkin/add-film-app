@@ -20,27 +20,33 @@
     <link rel="stylesheet" href="styles/main.css" />
   </head>
   <body>
-    <main class="container">
+    <header class="container">
       <div class="add__app">
-        <div class="add__app-filter">
-          <div class="filter__title"><p>Cписок фильмов</p></div>
-          <div class="filter__title"><p>2023</p></div>
+        <div class="filters">
+          <div class="filters__title"><p>Cписок фильмов</p></div>
+          <div class="filters__title"><p>2023</p></div>
         </div>
         <h1>Посмотреть</h1>
-        <div class="add__app-inner">
-          <div class="add__app-input">
-            <input
-              id="add__app-input"
-              class="app__input-data"
-              type="text"
-              placeholder="Добавить фильм"
-            />
-            <button id="btn__add-film" class="btn__add-film btn">
-              <img src="resources/btn-arrow.png" alt="arrow" />
-            </button>
-          </div>
-          <ul id="add__app-list" class="add__app-list"></ul>
-        </div>
+      </div>
+    </header>
+    <main class="container">
+      <div class="add__app">
+        <form id="add__app-form" class="add__app-form">
+          <input
+            id="add__app-input"
+            class="add__app-input"
+            type="text"
+            placeholder="Добавить фильм"
+          />
+          <button type="submit" id="btn__add-film" class="btn__add-film">
+            <img src="resources/btn-arrow.png" alt="arrow" />
+          </button>
+        </form>
+        <ul id="add__app-list" class="add__app-list">
+          <li id="empty__item-list" class="empty__item-list">
+            <img src="resources/empty.png" alt="" />
+          </li>
+        </ul>
       </div>
     </main>
     <!-- script -->
