@@ -32,6 +32,12 @@ function addFilm(e) {
   // достаем текст из инпута
   const filmText = inputNode.value;
 
+  // проверяем, чтобы текст был введен
+  if (!filmText) {
+    alert("Введите название фильма");
+    return;
+  }
+
   // формируем разметку для нового фильма
   const filmHTML = `
   <li class="add__app-film">
