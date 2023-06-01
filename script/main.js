@@ -73,28 +73,37 @@ function addFilm(e) {
 }
 
 function deleteFilm(e) {
-  if (e.target.dataset.action === "delete") {
-    const parentNode = e.target.closest(".add__app-film");
-    parentNode.remove();
-  }
+  // проверяем если клик был не по кнопке удалить
+  if (e.target.dataset.action !== "delete") return;
+
+  // иначе
+  // обращаемся к родителю таргета
+  const parentNode = e.target.closest(".add__app-film");
+  parentNode.remove();
+
+  // проверка на количества элементов в списке фильмов
   if (listNode.children.length === 1) {
     emptyElement.classList.remove("hidden");
   }
 }
 
 function checkedFilm(e) {
-  if (e.target.dataset.action === "checked") {
-    const parentNode = e.target.closest(".add__app-film");
-    parentNode.classList.toggle("checked");
-  }
+  // тоже самое тут
+  if (e.target.dataset.action !== "checked") return;
+
+  const parentNode = e.target.closest(".add__app-film");
+  parentNode.classList.toggle("checked");
 }
 
 function editFilm(e) {
   if (e.target.dataset.action === "edit") {
     const parentNode = e.target.closest(".add__app-film");
+
+    // а тут мы обращаемся к элементу внутри родителя
     const editBtnNode = parentNode.querySelector(".btn__edit-film");
     const saveBtnNode = parentNode.querySelector(".btn__save-edit");
     const filmTitle = parentNode.querySelector(".film__title");
+
     saveBtnNode.classList.remove("hidden");
     editBtnNode.classList.add("hidden");
     filmTitle.removeAttribute("readonly");
@@ -102,6 +111,7 @@ function editFilm(e) {
 }
 
 function saveEdit(e) {
+  // аналогичная функция верхним
   if (e.target.dataset.action === "save") {
     const parentNode = e.target.closest(".add__app-film");
     const editBtnNode = parentNode.querySelector(".btn__edit-film");
