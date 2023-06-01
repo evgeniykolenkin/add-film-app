@@ -116,7 +116,7 @@ h1 {
 .btn__add-film {
   display: flex;
   width: 62px;
-  height: 62px;
+  height: 58px;
   padding: 16px;
   background-color: #6532f8;
   border-radius: 50%;
@@ -178,8 +178,8 @@ h1 {
 }
 
 .btn__save-edit {
-  width: 65px;
-  height: 65px;
+  width: 60px;
+  height: 60px;
 }
 
 .hidden {
@@ -298,14 +298,16 @@ h1 {
   }
 
   .btn__edit-film {
-    width: 30px;
-    height: 30px;
+    width: 55px;
+    height: 55px;
+  }
+
+  .btn__save-edit {
+    width: 55px;
+    height: 55px;
   }
 
   .empty__item-list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 300px;
   }
 
@@ -323,7 +325,7 @@ h1 {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 500px) {
   .add__app {
     row-gap: 5px;
     padding: 0;
@@ -359,17 +361,27 @@ h1 {
 
   .btn__add-film {
     width: 52px;
-    height: 52px;
+    height: 48px;
   }
 
   .btn__edit-film {
-    width: 30px;
-    height: 30px;
+    width: 45px;
+    height: 45px;
+  }
+
+  .btn__save-edit {
+    width: 45px;
+    height: 45px;
   }
 
   .btn__delete-film {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .btn__check-film {
+    width: 39px;
+    height: 39px;
   }
 
   .add__app-film {
