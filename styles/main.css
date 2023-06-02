@@ -127,7 +127,9 @@ h1 {
   width: 100%;
 }
 
-.col__left {
+.edit__film-form {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
 }
 
@@ -140,7 +142,7 @@ h1 {
 }
 
 .film__title:not(:read-only) {
-  color: #6532f8;
+  color: gold;
 }
 
 .btn {
@@ -210,12 +212,14 @@ h1 {
   border-radius: 10px;
 }
 
+.col__left {
+  width: 100%;
+}
+
 .add__app-film .col__left,
 .add__app-film .col__right {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 20px;
 }
 
 .btn__check-film {
@@ -307,6 +311,11 @@ h1 {
     height: 55px;
   }
 
+  .btn__delete-film {
+    width: 45px;
+    height: 45px;
+  }
+
   .empty__item-list {
     width: 300px;
   }
@@ -317,11 +326,6 @@ h1 {
 
   .add__app-film {
     padding: 20px 20px;
-  }
-
-  .add__app-film .col__left,
-  .add__app-film .col__right {
-    gap: 15px;
   }
 }
 
@@ -386,10 +390,5 @@ h1 {
 
   .add__app-film {
     padding: 10px 10px;
-  }
-
-  .add__app-film .col__left,
-  .add__app-film .col__right {
-    gap: 10px;
   }
 }
