@@ -1,5 +1,10 @@
 // строковые константы
 const CHECKED_CLASS_NAME = "checked";
+const HIDDEN_CLASS_NAME = "hidden";
+const CHECKED_ACTION = "checked";
+const DELETE_ACTION = "delete";
+const EDIT_ACTION = "edit";
+const SAVE_ACTION = "save";
 
 // константы из html
 const formNode = document.getElementById("add__app-form");
@@ -16,22 +21,22 @@ function addFilmListeners(e) {
   switch (true) {
     // удаление фильма
     // если click по дате "delete", то выполняем функцию
-    case targetEl === "delete":
+    case targetEl === DELETE_ACTION:
       deleteFilm(e);
       break;
     // редактируем название
     // если click по дате "edit", то выполняем функцию
-    case targetEl === "edit":
+    case targetEl === EDIT_ACTION:
       editFilm(e);
       break;
     // сохраняем название
     // если click по дате "save", то выполняем функцию
-    case targetEl === "save":
+    case targetEl === SAVE_ACTION:
       saveEdit(e);
       break;
     // отмечаем фильм просмотренным
     // если click по дате "checked", то выполняем функцию
-    case targetEl === "checked":
+    case targetEl === CHECKED_ACTION:
       checkedFilm(e);
       break;
     default:
@@ -108,7 +113,7 @@ function deleteFilm(e) {
 
   // проверка на количества элементов в списке фильмов
   if (listNode.children.length === 1) {
-    hiddenElement.classList.remove("hidden");
+    hiddenElement.classList.remove(HIDDEN_CLASS_NAME);
   }
 }
 
@@ -117,7 +122,7 @@ function checkedFilm(e) {
   // тоже самое тут
   // только меняем класс у элемента
   const parentNode = getParentNode(e);
-  parentNode.classList.toggle("checked");
+  parentNode.classList.toggle(CHECKED_CLASS_NAME);
 }
 
 // редатирование фильма
@@ -129,8 +134,8 @@ function editFilm(e) {
   const saveBtnNode = parentNode.querySelector(".btn__save-edit");
   const filmTitle = parentNode.querySelector(".film__title");
 
-  saveBtnNode.classList.remove("hidden");
-  editBtnNode.classList.add("hidden");
+  saveBtnNode.classList.remove(HIDDEN_CLASS_NAME);
+  editBtnNode.classList.add(HIDDEN_CLASS_NAME);
   filmTitle.removeAttribute("readonly");
   filmTitle.focus();
 }
@@ -144,8 +149,8 @@ function saveEdit(e) {
   const editBtnNode = parentNode.querySelector(".btn__edit-film");
   const saveBtnNode = parentNode.querySelector(".btn__save-edit");
   const filmTitle = parentNode.querySelector(".film__title");
-  saveBtnNode.classList.add("hidden");
-  editBtnNode.classList.remove("hidden");
+  saveBtnNode.classList.add(HIDDEN_CLASS_NAME);
+  editBtnNode.classList.remove(HIDDEN_CLASS_NAME);
   filmTitle.setAttribute("readonly", true);
 }
 
