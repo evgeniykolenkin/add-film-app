@@ -8,23 +8,38 @@ const addBtnNode = document.getElementById("btn__add-film");
 const listNode = document.getElementById("add__app-list");
 const hiddenElement = document.getElementById("empty__item-list");
 
-// обработчики событий----------------------------------
-
-// добавление фильма
-formNode.addEventListener("submit", addFilm);
-
-// удаление фильма
-listNode.addEventListener("click", deleteFilm);
-
-// отмечаем фильм просмотренным
-listNode.addEventListener("click", checkedFilm);
-
-// редактируем и сохраняем название
-listNode.addEventListener("click", editFilm);
-listNode.addEventListener("click", saveEdit);
-
 // функции----------------------------------------------
 
+// добавление обработчиков событий по клику на кнопки с data-action
+function addFilmListeners(e) {
+  const targetEl = e.target.dataset.action;
+  switch (true) {
+    // удаление фильма
+    // если click по дате "delete", то выполняем функцию
+    case targetEl === "delete":
+      deleteFilm(e);
+      break;
+    // редактируем название
+    // если click по дате "edit", то выполняем функцию
+    case targetEl === "edit":
+      editFilm(e);
+      break;
+    // сохраняем название
+    // если click по дате "save", то выполняем функцию
+    case targetEl === "save":
+      saveEdit(e);
+      break;
+    // отмечаем фильм просмотренным
+    // если click по дате "checked", то выполняем функцию
+    case targetEl === "checked":
+      checkedFilm(e);
+      break;
+    default:
+      return;
+  }
+}
+
+// добавление фильма
 function addFilm(e) {
   // отменяем отправку формы
   e.preventDefault();
@@ -76,16 +91,20 @@ function addFilm(e) {
   }
 }
 
-function deleteFilm(e) {
-  // проверяем если клик был не по кнопке удалить
-  if (e.target.dataset.action !== "delete") {
-    return;
-  }
+// получение родителя таргета
+const getParentNode = (e) => e.target.closest(".add__app-film");
 
-  // иначе
-  // обращаемся к родителю таргета
-  const parentNode = e.target.closest(".add__app-film");
+// удаление слушателей с ЭЛЕМЕНТА, в нашем случае с li(далее parentNode)
+function removeFilmListeners(el) {
+  el.removeEventListener("click", addFilmListeners);
+}
+
+// удаление фильма
+function deleteFilm(e) {
+  // удаляем родителя таргета
+  const parentNode = getParentNode(e);
   parentNode.remove();
+  removeFilmListeners(parentNode);
 
   // проверка на количества элементов в списке фильмов
   if (listNode.children.length === 1) {
@@ -93,42 +112,47 @@ function deleteFilm(e) {
   }
 }
 
+// изменение свойств элемента списка на просмотренный(checked)
 function checkedFilm(e) {
   // тоже самое тут
-  if (e.target.dataset.action !== "checked") {
-    return;
-  }
-
-  const parentNode = e.target.closest(".add__app-film");
+  // только меняем класс у элемента
+  const parentNode = getParentNode(e);
   parentNode.classList.toggle("checked");
 }
 
+// редатирование фильма
 function editFilm(e) {
-  if (e.target.dataset.action === "edit") {
-    const parentNode = e.target.closest(".add__app-film");
+  const parentNode = getParentNode(e);
 
-    // а тут мы обращаемся к элементу внутри родителя
-    const editBtnNode = parentNode.querySelector(".btn__edit-film");
-    const saveBtnNode = parentNode.querySelector(".btn__save-edit");
-    const filmTitle = parentNode.querySelector(".film__title");
+  // а тут мы обращаемся к элементу внутри родителя
+  const editBtnNode = parentNode.querySelector(".btn__edit-film");
+  const saveBtnNode = parentNode.querySelector(".btn__save-edit");
+  const filmTitle = parentNode.querySelector(".film__title");
 
-    saveBtnNode.classList.remove("hidden");
-    editBtnNode.classList.add("hidden");
-    filmTitle.removeAttribute("readonly");
-    filmTitle.focus();
-  }
+  saveBtnNode.classList.remove("hidden");
+  editBtnNode.classList.add("hidden");
+  filmTitle.removeAttribute("readonly");
+  filmTitle.focus();
 }
 
+// сохранение изменений
 function saveEdit(e) {
-  // аналогичная функция верхним
-  if (e.target.dataset.action === "save") {
-    e.preventDefault();
-    const parentNode = e.target.closest(".add__app-film");
-    const editBtnNode = parentNode.querySelector(".btn__edit-film");
-    const saveBtnNode = parentNode.querySelector(".btn__save-edit");
-    const filmTitle = parentNode.querySelector(".film__title");
-    saveBtnNode.classList.add("hidden");
-    editBtnNode.classList.remove("hidden");
-    filmTitle.setAttribute("readonly", true);
-  }
+  // аналогичная функция верхней
+  e.preventDefault();
+  const parentNode = getParentNode(e);
+
+  const editBtnNode = parentNode.querySelector(".btn__edit-film");
+  const saveBtnNode = parentNode.querySelector(".btn__save-edit");
+  const filmTitle = parentNode.querySelector(".film__title");
+  saveBtnNode.classList.add("hidden");
+  editBtnNode.classList.remove("hidden");
+  filmTitle.setAttribute("readonly", true);
 }
+
+// обработчики событий----------------------------------
+
+// на элемент списка/фильм (li)
+listNode.addEventListener("click", addFilmListeners);
+
+// добавление фильма
+formNode.addEventListener("submit", addFilm);
