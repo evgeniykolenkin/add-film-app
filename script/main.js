@@ -89,7 +89,7 @@ function addFilm(e) {
   inputNode.value = "";
   inputNode.focus();
 
-  // убираем первый элемент списка с img пустого листа
+  // убираем первый элемент списка с img пустого листа,
   // когда есть хотя бы один добавленный фильм
   if (listNode.children.length > 1) {
     hiddenElement.classList.add("hidden");
@@ -111,7 +111,7 @@ function deleteFilm(e) {
   parentNode.remove();
   removeFilmListeners(parentNode);
 
-  // проверка на количества элементов в списке фильмов
+  // проверка количества элементов в списке фильмов
   if (listNode.children.length === 1) {
     hiddenElement.classList.remove(HIDDEN_CLASS_NAME);
   }
