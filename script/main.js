@@ -11,38 +11,11 @@ const formNode = document.getElementById("add__app-form");
 const inputNode = document.getElementById("add__app-input");
 const addBtnNode = document.getElementById("btn__add-film");
 const listNode = document.getElementById("add__app-list");
-const hiddenElement = document.getElementById("empty__item-list");
+
+let films = [];
+checkEmptyLIst();
 
 // функции----------------------------------------------
-
-// добавление обработчиков событий по клику на кнопки с data-action
-function addFilmListeners(e) {
-  const targetEl = e.target.dataset.action;
-  switch (true) {
-    // удаление фильма
-    // если click по дате "delete", то выполняем функцию
-    case targetEl === DELETE_ACTION:
-      deleteFilm(e);
-      break;
-    // редактируем название
-    // если click по дате "edit", то выполняем функцию
-    case targetEl === EDIT_ACTION:
-      editFilm(e);
-      break;
-    // сохраняем название
-    // если click по дате "save", то выполняем функцию
-    case targetEl === SAVE_ACTION:
-      saveEdit(e);
-      break;
-    // отмечаем фильм просмотренным
-    // если click по дате "checked", то выполняем функцию
-    case targetEl === CHECKED_ACTION:
-      checkedFilm(e);
-      break;
-    default:
-      return;
-  }
-}
 
 // добавление фильма
 function addFilm(e) {
@@ -52,21 +25,33 @@ function addFilm(e) {
   // достаем текст из инпута
   const filmText = inputNode.value;
 
+  const newFilm = {
+    id: Date.now(),
+    text: filmText,
+    checked: false,
+  };
+
+  // добавляем фильм в массив
+  films.push(newFilm);
+
   // проверяем, чтобы текст был введен
   if (!filmText) {
     alert("Введите название фильма");
     return;
   }
 
+  // формируем css class для состояния checked
+  const cssClass = newFilm.checked ? "add__app-film checked" : "add__app-film";
+
   // формируем разметку для нового фильма
   const filmHTML = `
-  <li class="add__app-film">
+  <li id="${newFilm.id}" class="${cssClass}">
     <div class="col__left">
       <button data-action="checked" class="btn btn__check-film">
         <img src="resources/unchecked.png" alt="" />
       </button>
       <form class="edit__film-form">
-        <input class="film__title" readonly value="${filmText}" />
+        <input class="film__title" readonly value="${newFilm.text}" />
         <button data-action="save" class="btn btn__save-edit hidden">
           <img src="resources/favicon.ico" class="save__img" alt="" />
         </button>
@@ -89,11 +74,7 @@ function addFilm(e) {
   inputNode.value = "";
   inputNode.focus();
 
-  // убираем первый элемент списка с img пустого листа,
-  // когда есть хотя бы один добавленный фильм
-  if (listNode.children.length > 1) {
-    hiddenElement.classList.add("hidden");
-  }
+  checkEmptyLIst();
 }
 
 // получение родителя таргета
@@ -106,15 +87,22 @@ function removeFilmListeners(el) {
 
 // удаление фильма
 function deleteFilm(e) {
-  // удаляем родителя таргета
   const parentNode = getParentNode(e);
+
+  // удаление на уровне данных
+  // определяем id тега li(элемента массива films)
+  const id = parseInt(parentNode.id);
+
+  // удаление элемента из массива с помощью фильтрации
+  films = films.filter((film) => film.id !== id);
+
+  // удаление на уровне разметки
+  // удаляем родителя таргета
   parentNode.remove();
+
   removeFilmListeners(parentNode);
 
-  // проверка количества элементов в списке фильмов
-  if (listNode.children.length === 1) {
-    hiddenElement.classList.remove(HIDDEN_CLASS_NAME);
-  }
+  checkEmptyLIst();
 }
 
 // изменение свойств элемента списка на просмотренный(checked)
@@ -122,6 +110,13 @@ function checkedFilm(e) {
   // тоже самое тут
   // только меняем класс у элемента
   const parentNode = getParentNode(e);
+
+  // изменение свойств(checked) на уровне данных
+  const id = parseInt(parentNode.id);
+  const film = films.find((film) => film.id === id);
+  film.checked = !film.checked;
+
+  // тоглим класс на уровне разметки
   parentNode.classList.toggle(CHECKED_CLASS_NAME);
 }
 
@@ -153,6 +148,55 @@ function saveEdit(e) {
   editBtnNode.classList.remove(HIDDEN_CLASS_NAME);
   filmTitle.setAttribute("readonly", true);
 }
+
+// добавление обработчиков событий по клику на кнопки с data-action
+function addFilmListeners(e) {
+  const targetEl = e.target.dataset.action;
+  switch (true) {
+    // удаление фильма
+    // если click по дате "delete", то выполняем функцию
+    case targetEl === DELETE_ACTION:
+      deleteFilm(e);
+      break;
+    // редактируем название
+    // если click по дате "edit", то выполняем функцию
+    case targetEl === EDIT_ACTION:
+      editFilm(e);
+      break;
+    // сохраняем название
+    // если click по дате "save", то выполняем функцию
+    case targetEl === SAVE_ACTION:
+      saveEdit(e);
+      break;
+    // отмечаем фильм просмотренным
+    // если click по дате "checked", то выполняем функцию
+    case targetEl === CHECKED_ACTION:
+      checkedFilm(e);
+      break;
+    default:
+      return;
+  }
+}
+
+// проверка количества объектов в массиве
+function checkEmptyLIst() {
+  if (films.length === 0) {
+    const emptyListHTML = `
+    <li id="empty__item-list" class="empty__item-list">
+      <img src="resources/empty.png" alt="" />
+    </li>`;
+    listNode.insertAdjacentHTML("afterbegin", emptyListHTML);
+  }
+
+  if (films.length > 0) {
+    const emptyListElement = document.getElementById("empty__item-list");
+    emptyListElement ? emptyListElement.remove() : null;
+  }
+}
+
+// LocalStorage
+// почти-почти-почти уже догнал, понял ,как сохранить весь html строкой ахахах
+// осталось додумать до конца, как сохранить только данные массива, я уже близок
 
 // обработчики событий----------------------------------
 
