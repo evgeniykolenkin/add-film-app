@@ -15,7 +15,44 @@ const listNode = document.getElementById("add__app-list");
 let films = [];
 checkEmptyLIst();
 
+films.forEach(function (film) {
+  renderFilm(film);
+});
+
 // функции----------------------------------------------
+
+// рендер каждого нового фильма
+function renderFilm(film) {
+  // формируем css class для состояния checked
+  const cssClass = film.checked ? "add__app-film checked" : "add__app-film";
+
+  // формируем разметку для нового фильма
+  const filmHTML = `
+  <li id="${film.id}" class="${cssClass}">
+    <div class="col__left">
+      <button data-action="checked" class="btn btn__check-film">
+        <img src="resources/unchecked.png" alt="" />
+      </button>
+      <form class="edit__film-form">
+        <input class="film__title" readonly value="${film.text}" />
+        <button data-action="save" class="btn btn__save-edit hidden">
+          <img src="resources/favicon.ico" class="save__img" alt="" />
+        </button>
+      </form>
+    </div>
+    <div class="col__right">
+      <button data-action="edit" class="btn btn__edit-film">
+        <img src="resources/edit.png" class="edit__img" alt="" />
+      </button>
+      <button data-action="delete" class="btn btn__delete-film">
+        <img src="resources/btn-cross.png" alt="" />
+      </button>
+    </div>
+  </li>`;
+
+  // добавляем ее на страницу
+  listNode.insertAdjacentHTML("beforeend", filmHTML);
+}
 
 // добавление фильма
 function addFilm(e) {
@@ -40,35 +77,7 @@ function addFilm(e) {
     return;
   }
 
-  // формируем css class для состояния checked
-  const cssClass = newFilm.checked ? "add__app-film checked" : "add__app-film";
-
-  // формируем разметку для нового фильма
-  const filmHTML = `
-  <li id="${newFilm.id}" class="${cssClass}">
-    <div class="col__left">
-      <button data-action="checked" class="btn btn__check-film">
-        <img src="resources/unchecked.png" alt="" />
-      </button>
-      <form class="edit__film-form">
-        <input class="film__title" readonly value="${newFilm.text}" />
-        <button data-action="save" class="btn btn__save-edit hidden">
-          <img src="resources/favicon.ico" class="save__img" alt="" />
-        </button>
-      </form>
-    </div>
-    <div class="col__right">
-      <button data-action="edit" class="btn btn__edit-film">
-        <img src="resources/edit.png" class="edit__img" alt="" />
-      </button>
-      <button data-action="delete" class="btn btn__delete-film">
-        <img src="resources/btn-cross.png" alt="" />
-      </button>
-    </div>
-  </li>`;
-
-  // добавляем ее на страницу
-  listNode.insertAdjacentHTML("beforeend", filmHTML);
+  renderFilm(newFilm);
 
   // очищаем инпут и оставляем фокус на нем
   inputNode.value = "";
