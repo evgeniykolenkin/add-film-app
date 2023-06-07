@@ -30,23 +30,19 @@
       </div>
     </header>
     <main class="container">
+      <form id="add__app-form" class="add__app-form">
+        <input
+          id="add__app-input"
+          class="add__app-input"
+          type="text"
+          placeholder="Добавить фильм"
+        />
+        <button type="submit" id="btn__add-film" class="btn__add-film">
+          <img src="resources/btn-arrow.png" alt="arrow" />
+        </button>
+      </form>
       <div class="add__app">
-        <form id="add__app-form" class="add__app-form">
-          <input
-            id="add__app-input"
-            class="add__app-input"
-            type="text"
-            placeholder="Добавить фильм"
-          />
-          <button type="submit" id="btn__add-film" class="btn__add-film">
-            <img src="resources/btn-arrow.png" alt="arrow" />
-          </button>
-        </form>
-        <ul id="add__app-list" class="add__app-list">
-          <!-- <li id="empty__item-list" class="empty__item-list">
-            <img src="resources/empty.png" alt="" />
-          </li> -->
-        </ul>
+        <ul id="add__app-list" class="add__app-list"></ul>
       </div>
     </main>
     <!-- script -->

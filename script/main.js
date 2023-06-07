@@ -1,5 +1,6 @@
 // строковые константы
 const CHECKED_CLASS_NAME = "checked";
+const CHANGED_CLASS_NAME = "changed";
 const HIDDEN_CLASS_NAME = "hidden";
 const CHECKED_ACTION = "checked";
 const DELETE_ACTION = "delete";
@@ -13,6 +14,13 @@ const addBtnNode = document.getElementById("btn__add-film");
 const listNode = document.getElementById("add__app-list");
 
 let films = [];
+
+const filmsFromStorage = localStorage.getItem("films");
+
+if (filmsFromStorage) {
+  films = JSON.parse(filmsFromStorage);
+}
+
 checkEmptyLIst();
 
 films.forEach(function (film) {
@@ -21,142 +29,8 @@ films.forEach(function (film) {
 
 // функции----------------------------------------------
 
-// рендер каждого нового фильма
-function renderFilm(film) {
-  // формируем css class для состояния checked
-  const cssClass = film.checked ? "add__app-film checked" : "add__app-film";
-
-  // формируем разметку для нового фильма
-  const filmHTML = `
-  <li id="${film.id}" class="${cssClass}">
-    <div class="col__left">
-      <button data-action="checked" class="btn btn__check-film">
-        <img src="resources/unchecked.png" alt="" />
-      </button>
-      <form class="edit__film-form">
-        <input class="film__title" readonly value="${film.text}" />
-        <button data-action="save" class="btn btn__save-edit hidden">
-          <img src="resources/favicon.ico" class="save__img" alt="" />
-        </button>
-      </form>
-    </div>
-    <div class="col__right">
-      <button data-action="edit" class="btn btn__edit-film">
-        <img src="resources/edit.png" class="edit__img" alt="" />
-      </button>
-      <button data-action="delete" class="btn btn__delete-film">
-        <img src="resources/btn-cross.png" alt="" />
-      </button>
-    </div>
-  </li>`;
-
-  // добавляем ее на страницу
-  listNode.insertAdjacentHTML("beforeend", filmHTML);
-}
-
-// добавление фильма
-function addFilm(e) {
-  // отменяем отправку формы
-  e.preventDefault();
-
-  // достаем текст из инпута
-  const filmText = inputNode.value;
-
-  const newFilm = {
-    id: Date.now(),
-    text: filmText,
-    checked: false,
-  };
-
-  // добавляем фильм в массив
-  films.push(newFilm);
-
-  // проверяем, чтобы текст был введен
-  if (!filmText) {
-    alert("Введите название фильма");
-    return;
-  }
-
-  renderFilm(newFilm);
-
-  // очищаем инпут и оставляем фокус на нем
-  inputNode.value = "";
-  inputNode.focus();
-
-  checkEmptyLIst();
-}
-
 // получение родителя таргета
 const getParentNode = (e) => e.target.closest(".add__app-film");
-
-// удаление слушателей с ЭЛЕМЕНТА, в нашем случае с li(далее parentNode)
-function removeFilmListeners(el) {
-  el.removeEventListener("click", addFilmListeners);
-}
-
-// удаление фильма
-function deleteFilm(e) {
-  const parentNode = getParentNode(e);
-
-  // удаление на уровне данных
-  // определяем id тега li(элемента массива films)
-  const id = parseInt(parentNode.id);
-
-  // удаление элемента из массива с помощью фильтрации
-  films = films.filter((film) => film.id !== id);
-
-  // удаление на уровне разметки
-  // удаляем родителя таргета
-  parentNode.remove();
-
-  removeFilmListeners(parentNode);
-
-  checkEmptyLIst();
-}
-
-// изменение свойств элемента списка на просмотренный(checked)
-function checkedFilm(e) {
-  // тоже самое тут
-  // только меняем класс у элемента
-  const parentNode = getParentNode(e);
-
-  // изменение свойств(checked) на уровне данных
-  const id = parseInt(parentNode.id);
-  const film = films.find((film) => film.id === id);
-  film.checked = !film.checked;
-
-  // тоглим класс на уровне разметки
-  parentNode.classList.toggle(CHECKED_CLASS_NAME);
-}
-
-// редатирование фильма
-function editFilm(e) {
-  const parentNode = getParentNode(e);
-
-  // а тут мы обращаемся к элементу внутри родителя
-  const editBtnNode = parentNode.querySelector(".btn__edit-film");
-  const saveBtnNode = parentNode.querySelector(".btn__save-edit");
-  const filmTitle = parentNode.querySelector(".film__title");
-
-  saveBtnNode.classList.remove(HIDDEN_CLASS_NAME);
-  editBtnNode.classList.add(HIDDEN_CLASS_NAME);
-  filmTitle.removeAttribute("readonly");
-  filmTitle.focus();
-}
-
-// сохранение изменений
-function saveEdit(e) {
-  // аналогичная функция верхней
-  e.preventDefault();
-  const parentNode = getParentNode(e);
-
-  const editBtnNode = parentNode.querySelector(".btn__edit-film");
-  const saveBtnNode = parentNode.querySelector(".btn__save-edit");
-  const filmTitle = parentNode.querySelector(".film__title");
-  saveBtnNode.classList.add(HIDDEN_CLASS_NAME);
-  editBtnNode.classList.remove(HIDDEN_CLASS_NAME);
-  filmTitle.setAttribute("readonly", true);
-}
 
 // добавление обработчиков событий по клику на кнопки с data-action
 function addFilmListeners(e) {
@@ -187,6 +61,177 @@ function addFilmListeners(e) {
   }
 }
 
+// удаление слушателей с ЭЛЕМЕНТА, в нашем случае с li(далее parentNode)
+function removeFilmListeners(el) {
+  el.removeEventListener("click", addFilmListeners);
+}
+
+// рендер каждого нового фильма
+function renderFilm(film) {
+  // формируем css class для состояния checked
+  const cssClassChecked = film.checked
+    ? "add__app-film checked"
+    : "add__app-film";
+  const cssClassChanged = film.changed ? "hidden changed" : "hidden";
+  // формируем разметку для нового фильма
+  const filmHTML = `
+  <li id="${film.id}" class="${cssClassChecked}">
+    <div class="col__left">
+      <button data-action="checked" class="btn btn__check-film">
+        <img src="resources/unchecked.png" alt="" />
+      </button>
+      <form class="edit__film-form">
+        <input class="film__title" readonly value="${film.text}" />
+        <p class="${cssClassChanged}">изменено</p>
+        <button data-action="save" class="btn btn__save-edit hidden">
+          <img src="resources/favicon.ico" class="save__img" alt="" />
+        </button>
+      </form>
+    </div>
+    <div class="col__right">
+      <button data-action="edit" class="btn btn__edit-film">
+        <img src="resources/edit.png" class="edit__img" alt="" />
+      </button>
+      <button data-action="delete" class="btn btn__delete-film">
+        <img src="resources/btn-cross.png" alt="" />
+      </button>
+    </div>
+  </li>`;
+
+  // добавляем ее на страницу
+  listNode.insertAdjacentHTML("beforeend", filmHTML);
+}
+
+// добавление фильма
+function addFilm(e) {
+  // отменяем отправку формы
+  e.preventDefault();
+
+  // достаем текст из инпута
+  const filmText = inputNode.value;
+
+  // проверяем, чтобы текст был введен
+  if (!filmText) {
+    alert("Введите название фильма");
+    return;
+  }
+
+  const newFilm = {
+    id: Date.now(),
+    initialText: filmText,
+    text: filmText,
+    checked: false,
+    changed: false,
+  };
+
+  // добавляем фильм в массив
+  films.push(newFilm);
+
+  // сохраняем данные в хранилище
+  saveToLocalStorage();
+
+  renderFilm(newFilm);
+
+  // очищаем инпут и оставляем фокус на нем
+  inputNode.value = "";
+  inputNode.focus();
+
+  checkEmptyLIst();
+}
+
+// удаление фильма
+function deleteFilm(e) {
+  const parentNode = getParentNode(e);
+
+  // удаление на уровне данных
+  // определяем id тега li(элемента массива films)
+  const id = parseInt(parentNode.id);
+
+  // удаление элемента из массива с помощью фильтрации
+  films = films.filter((film) => film.id !== id);
+
+  // сохраняем данные в хранилище
+  saveToLocalStorage();
+
+  // удаление на уровне разметки
+  // удаляем родителя таргета
+  parentNode.remove();
+
+  removeFilmListeners(parentNode);
+
+  checkEmptyLIst();
+}
+
+// изменение свойств элемента списка на просмотренный(checked)
+function checkedFilm(e) {
+  // тоже самое тут
+  // только меняем класс у элемента
+  const parentNode = getParentNode(e);
+
+  // изменение свойств(checked) на уровне данных
+  const id = parseInt(parentNode.id);
+  const film = films.find((film) => film.id === id);
+  film.checked = !film.checked;
+
+  // сохраняем данные в хранилище
+  saveToLocalStorage();
+
+  // тоглим класс на уровне разметки
+  parentNode.classList.toggle(CHECKED_CLASS_NAME);
+}
+
+// редатирование фильма
+function editFilm(e) {
+  const parentNode = getParentNode(e);
+
+  // а тут мы обращаемся к элементу внутри родителя
+  const editBtnNode = parentNode.querySelector(".btn__edit-film");
+  const saveBtnNode = parentNode.querySelector(".btn__save-edit");
+  const filmTitle = parentNode.querySelector(".film__title");
+
+  saveBtnNode.classList.remove(HIDDEN_CLASS_NAME);
+  editBtnNode.classList.add(HIDDEN_CLASS_NAME);
+  filmTitle.removeAttribute("readonly");
+  filmTitle.focus();
+}
+
+// сохранение изменений
+function saveEdit(e) {
+  // аналогичная функция верхней
+  e.preventDefault();
+  const parentNode = getParentNode(e);
+
+  const editBtnNode = parentNode.querySelector(".btn__edit-film");
+  const saveBtnNode = parentNode.querySelector(".btn__save-edit");
+  const textHiddenNode = parentNode.querySelector(".hidden");
+  const filmTitle = parentNode.querySelector(".film__title");
+  saveBtnNode.classList.add(HIDDEN_CLASS_NAME);
+  editBtnNode.classList.remove(HIDDEN_CLASS_NAME);
+  filmTitle.setAttribute("readonly", true);
+
+  //изменяем состояние фильма на changed на уровне данных
+  const id = parseInt(parentNode.id);
+  const film = films.find((film) => film.id === id);
+
+  // если изначальный текст не равен новому
+  if (film.initialText !== filmTitle.value) {
+    // добавляем класс на уровне разметки
+    textHiddenNode.classList.add(CHANGED_CLASS_NAME);
+    // меняем статус на уровне данных
+    film.changed = true;
+    film.text = filmTitle.value;
+  } else {
+    // убираем класс на уровне разметки
+    textHiddenNode.classList.remove(CHANGED_CLASS_NAME);
+    // меняем статус на уровне данных
+    film.changed = false;
+    film.text = film.initialText;
+  }
+
+  // сохраняем данные в хранилище
+  saveToLocalStorage();
+}
+
 // проверка количества объектов в массиве
 function checkEmptyLIst() {
   if (films.length === 0) {
@@ -203,9 +248,10 @@ function checkEmptyLIst() {
   }
 }
 
-// LocalStorage
-// почти-почти-почти уже догнал, понял ,как сохранить весь html строкой ахахах
-// осталось додумать до конца, как сохранить только данные массива, я уже близок
+// сохранение массива films в LocalStorage
+function saveToLocalStorage() {
+  localStorage.setItem("films", JSON.stringify(films));
+}
 
 // обработчики событий----------------------------------
 

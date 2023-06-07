@@ -39,8 +39,10 @@ header {
 }
 
 .container {
+  max-width: 900px;
   width: 100%;
-  padding: 10px;
+  margin: 0 auto;
+  padding: 5px;
   box-sizing: border-box;
 }
 
@@ -100,6 +102,7 @@ h1 {
 .add__app-form {
   display: flex;
   gap: 20px;
+  padding: 30px;
 }
 
 .add__app-input {
@@ -130,6 +133,8 @@ h1 {
 .edit__film-form {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 10px;
   width: 100%;
 }
 
@@ -151,7 +156,7 @@ h1 {
   align-items: center;
   background-color: transparent;
   border: none;
-  padding: 10px;
+  padding: 5px;
 }
 
 .btn img {
@@ -159,13 +164,13 @@ h1 {
 }
 
 .btn__edit-film {
-  width: 60px;
-  height: 60px;
+  width: 52px;
+  height: 50px;
 }
 
 .btn__delete-film {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 35px;
 }
 
 .btn__edit-film:hover {
@@ -180,8 +185,8 @@ h1 {
 }
 
 .btn__save-edit {
-  width: 60px;
-  height: 60px;
+  width: 61px;
+  height: 50px;
 }
 
 .hidden {
@@ -207,6 +212,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   padding: 29px 20px;
   background-color: #3a3939;
   border-radius: 10px;
@@ -220,6 +226,7 @@ h1 {
 .add__app-film .col__right {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 .btn__check-film {
@@ -247,6 +254,13 @@ h1 {
 
 .checked .btn__check-film img {
   background-color: tomato;
+}
+
+.changed {
+  display: block;
+  width: 55px;
+  font-size: 12px;
+  color: #6532f8;
 }
 
 @media (max-width: 767px) {
@@ -301,13 +315,17 @@ h1 {
     padding: 0 10px;
   }
 
+  .edit__film-form {
+    gap: 12px;
+  }
+
   .btn__edit-film {
     width: 55px;
     height: 55px;
   }
 
   .btn__save-edit {
-    width: 55px;
+    width: 68px;
     height: 55px;
   }
 
@@ -363,6 +381,15 @@ h1 {
     padding: 0 5px;
   }
 
+  .add__app-film .col__left,
+  .add__app-film .col__right {
+    gap: 5px;
+  }
+
+  .edit__film-form {
+    gap: 5px;
+  }
+
   .btn__add-film {
     width: 52px;
     height: 48px;
@@ -374,18 +401,13 @@ h1 {
   }
 
   .btn__save-edit {
-    width: 45px;
+    width: 69px;
     height: 45px;
   }
 
   .btn__delete-film {
     width: 40px;
     height: 40px;
-  }
-
-  .btn__check-film {
-    width: 39px;
-    height: 39px;
   }
 
   .add__app-film {
