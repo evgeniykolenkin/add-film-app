@@ -105,7 +105,8 @@ function addFilm(e) {
   e.preventDefault();
 
   // достаем текст из инпута
-  const filmText = inputNode.value.replaceAll(" ", "");
+  // удаляя при этом пробелы в конце и начале строки
+  const filmText = inputNode.value.trim();
 
   // проверяем, чтобы текст был введен
   if (!filmText) {
