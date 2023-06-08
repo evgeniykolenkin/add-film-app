@@ -19,13 +19,10 @@ const filmsFromStorage = localStorage.getItem("films");
 
 if (filmsFromStorage) {
   films = JSON.parse(filmsFromStorage);
+  films.forEach((film) => renderFilm(film));
 }
 
 checkEmptyLIst();
-
-films.forEach(function (film) {
-  renderFilm(film);
-});
 
 // функции----------------------------------------------
 
