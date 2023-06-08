@@ -212,13 +212,19 @@ function saveEdit(e) {
   const id = parseInt(parentNode.id);
   const film = films.find((film) => film.id === id);
 
+  if (!filmTitle.value.trim()) {
+    alert("введите название фильма");
+    film.changed = false;
+    textHiddenNode.classList.remove(CHANGED_CLASS_NAME);
+    return (filmTitle.value = film.initialText);
+  }
   // если изначальный текст не равен новому
   if (film.initialText !== filmTitle.value) {
     // добавляем класс на уровне разметки
     textHiddenNode.classList.add(CHANGED_CLASS_NAME);
     // меняем статус на уровне данных
     film.changed = true;
-    film.text = filmTitle.value;
+    film.text = filmTitle.value.trim();
   } else {
     // убираем класс на уровне разметки
     textHiddenNode.classList.remove(CHANGED_CLASS_NAME);
