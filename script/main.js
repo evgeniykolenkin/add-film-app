@@ -105,7 +105,7 @@ function addFilm(e) {
   e.preventDefault();
 
   // достаем текст из инпута
-  const filmText = inputNode.value;
+  const filmText = inputNode.value.replaceAll(" ", "");
 
   // проверяем, чтобы текст был введен
   if (!filmText) {
