@@ -116,6 +116,7 @@ function addFilm(e) {
     return;
   }
 
+  // создаём объект с данными из нового фильма
   const newFilm = {
     id: Date.now(),
     initialText: filmText,
@@ -124,7 +125,7 @@ function addFilm(e) {
     changed: false,
   };
 
-  // добавляем фильм в массив
+  // добавляем этот объект(фильм) в массив
   films.push(newFilm);
 
   // сохраняем данные в хранилище
