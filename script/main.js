@@ -22,7 +22,7 @@ if (filmsFromStorage) {
   films.forEach((film) => renderFilm(film));
 }
 
-checkEmptyLIst();
+countFilmsElements();
 
 // функции----------------------------------------------
 
@@ -127,7 +127,7 @@ function addFilm(e) {
   films.push(newFilm);
 
   // сохраняем данные в хранилище
-  saveToLocalStorage();
+  saveFilmsToStorage();
 
   renderFilm(newFilm);
 
@@ -135,7 +135,7 @@ function addFilm(e) {
   inputNode.value = "";
   inputNode.focus();
 
-  checkEmptyLIst();
+  countFilmsElements();
 }
 
 // удаление фильма
@@ -150,7 +150,7 @@ function deleteFilm(e) {
   films = films.filter((film) => film.id !== id);
 
   // сохраняем данные в хранилище
-  saveToLocalStorage();
+  saveFilmsToStorage();
 
   // удаление на уровне разметки
   // удаляем родителя таргета
@@ -158,7 +158,7 @@ function deleteFilm(e) {
 
   removeFilmListeners(parentNode);
 
-  checkEmptyLIst();
+  countFilmsElements();
 }
 
 // изменение свойств элемента списка на просмотренный(checked)
@@ -173,7 +173,7 @@ function checkedFilm(e) {
   film.checked = !film.checked;
 
   // сохраняем данные в хранилище
-  saveToLocalStorage();
+  saveFilmsToStorage();
 
   // тоглим класс на уровне разметки
   parentNode.classList.toggle(CHECKED_CLASS_NAME);
@@ -213,7 +213,7 @@ function saveEdit(e) {
   const film = films.find((film) => film.id === id);
 
   if (!filmTitle.value.trim()) {
-    alert("введите название фильма");
+    alert("Введите название фильма");
     film.changed = false;
     textHiddenNode.classList.remove(CHANGED_CLASS_NAME);
     return (filmTitle.value = film.initialText);
@@ -234,11 +234,11 @@ function saveEdit(e) {
   }
 
   // сохраняем данные в хранилище
-  saveToLocalStorage();
+  saveFilmsToStorage();
 }
 
 // проверка количества объектов в массиве
-function checkEmptyLIst() {
+function countFilmsElements() {
   if (films.length === 0) {
     const emptyListHTML = `
     <li id="empty__item-list" class="empty__item-list">
@@ -254,7 +254,7 @@ function checkEmptyLIst() {
 }
 
 // сохранение массива films в LocalStorage
-function saveToLocalStorage() {
+function saveFilmsToStorage() {
   localStorage.setItem("films", JSON.stringify(films));
 }
 
