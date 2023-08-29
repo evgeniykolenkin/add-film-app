@@ -1,0 +1,22 @@
+{
+  "name": "movies",
+  "source": [
+    "src/index.html",
+    "src/resources/unchecked.png",
+    "src/resources/btn-cross.png",
+    "src/resources/edit.png",
+    "src/resources/empty.png",
+    "src/resources/favicon.ico"
+  ],
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build --no-source-maps --dist-dir prod"
+  },
+  "devDependencies": {
+    "parcel": "latest",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "firebase": "^10.3.0"
+  }
+}

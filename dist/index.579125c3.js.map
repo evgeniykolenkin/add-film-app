@@ -1,0 +1,1 @@
+{"mappings":"AAAA,MAAM,QAAQ;AAEd,QAAQ,IAAI","sources":["src/index.js"],"sourcesContent":["const hello = 5;\r\n\r\ncomsole.log(hello);\r\n"],"names":[],"version":3,"file":"index.579125c3.js.map","sourceRoot":"/__parcel_source_root/"}
